@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Sign-in · NeedToPee</title>
+<link rel="icon" href="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+<header><img src="icon.png" alt=""><a href="./">NeedToPee</a></header>
+<div id="error" hidden>
+<h1>Sign-in didn't finish</h1>
+<p>The sign-in service sent back this message:</p>
+<div class="hero"><p id="error-text"></p></div>
+<p>Go back to the NeedToPee app and try again. If it keeps happening, email <a href="mailto:vasilis.giotsas@mailmasker.com">vasilis.giotsas@mailmasker.com</a> with the message above.</p>
+</div>
+<div id="code" hidden>
+<h1>Almost there</h1>
+<p>Your sign-in worked, but your phone opened this page instead of the app. Tap the button to finish signing in.</p>
+<a class="btn" id="open-app" href="nicetopee://auth/callback">Open NeedToPee</a>
+<p class="muted">If nothing happens, go back to the app and sign in again.</p>
+</div>
+<div id="empty">
+<h1>Nothing to do here</h1>
+<p>This page finishes signing in to the NeedToPee app. If you came here by mistake, head to the <a href="./">home page</a>.</p>
+</div>
+<footer><a href="./">Home</a><a href="privacy">Privacy policy</a><a href="terms">Terms of use</a><a href="mailto:vasilis.giotsas@mailmasker.com">Contact</a></footer>
+</main>
+<script>
+// Supabase lands here when it can't redirect back to the app: errors arrive in the query or the hash, a sign-in code in the query.
+var params = new URLSearchParams(location.search);
+new URLSearchParams(location.hash.slice(1)).forEach(function (v, k) { if (!params.has(k)) params.set(k, v); });
+var show = function (id) { document.getElementById('empty').hidden = true; document.getElementById(id).hidden = false; };
+if (params.get('error') || params.get('error_description')) {
+  document.getElementById('error-text').textContent = params.get('error_description') || params.get('error');
+  show('error');
+} else if (params.get('code')) {
+  document.getElementById('open-app').href = 'nicetopee://auth/callback?code=' + encodeURIComponent(params.get('code'));
+  show('code');
+}
+</script>
+</body>
+</html>

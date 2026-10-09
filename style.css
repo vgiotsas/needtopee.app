@@ -15,3 +15,4 @@ a { color: var(--berry); }
 .hero { background: var(--soft); border-radius: 18px; padding: 24px; margin: 8px 0 24px; }
 .hero p { margin: 0; color: var(--ink); font-size: 19px; }
 footer { border-top: 1px solid var(--line); margin-top: 48px; padding-top: 16px; font-size: 14px; color: var(--ink2); display: flex; gap: 16px; flex-wrap: wrap; }
+.btn { display: inline-block; background: var(--berry); color: #fff; font-weight: 700; text-decoration: none; padding: 12px 22px; border-radius: 999px; margin: 8px 0 16px; }
